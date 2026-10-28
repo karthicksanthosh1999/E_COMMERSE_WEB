@@ -1,0 +1,37 @@
+{
+  "headerData": {
+    "topHeader": "FREE EXPRESS DELIVERY ON ORDERS OVER $49 | USE CODE FRESHTYLE10",
+    "pages": [
+      {
+        "id": 0,
+        "title": "All Categories",
+        "link": "/all-categories"
+      },
+      {
+        "id": 1,
+        "title": "Fresh Fruits & Veg",
+        "link": "/fruits-vegs"
+      },
+      {
+        "id": 2,
+        "title": "Sarees % Ethnic Wear",
+        "link": "/sarees"
+      },
+      {
+        "id": 3,
+        "title": "T-Shirts & Apparel",
+        "link": "/t_shirts"
+      },
+      {
+        "id": 4,
+        "title": "Deals of the Day",
+        "link": "/deals-of-the-day"
+      },
+      {
+        "id": 5,
+        "title": "Customer Care",
+        "link": "/customer-care"
+      }
+    ]
+  }
+}
