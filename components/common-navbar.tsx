@@ -22,7 +22,7 @@ import {
 import { usePathname, useRouter } from "next/navigation";
 import { useSession } from "@/providers/AuthProviders";
 import Image from "next/image";
-import { AuthModal } from "./auth-model";
+import AuthModel from "./auth-model";
 
 const navItems = [
   { label: "Home", href: "/home" },
@@ -411,9 +411,9 @@ export default function Header() {
       </div>
     </header>
     
-      <AuthModal 
-        isOpen={authModelOpen} 
-        onClose={()=>setAuthModelOpen(false)} 
+      <AuthModel 
+        open={authModelOpen} 
+        onOpenChange={()=>setAuthModelOpen(false)} 
         />
     </>
   );

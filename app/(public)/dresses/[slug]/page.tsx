@@ -1,10 +1,11 @@
-import ProductDetails from "./_component/product-details";
+import ProductDetails from "@/components/product-details";
 
-interface PageProps {
-  params: Promise<{ slug: string }>;
+function ProductDetailsPage() {
+  return (
+    <>
+      <ProductDetails />
+    </>
+  )
 }
 
-export default async function ProductDetailsPage({  params }: PageProps) {
-  const { slug } = await params;
-  return <ProductDetails slug={slug} />;
-}
+export default ProductDetailsPage;
