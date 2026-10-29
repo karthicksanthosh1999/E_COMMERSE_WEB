@@ -12,9 +12,17 @@ import {
   MessageCircle,
   Phone,
   Circle,
+  Package,
+  User,
+  Truck,
+  LogOut,
+  ChevronDown,
+  LogIn,
 } from "lucide-react";
+import { usePathname, useRouter } from "next/navigation";
+import { useSession } from "@/providers/AuthProviders";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
+import { AuthModal } from "./auth-model";
 
 const navItems = [
   { label: "Home", href: "/home" },
@@ -25,11 +33,27 @@ const navItems = [
 
 export default function Header() {
   
-  const currentPage = usePathname();
+  const currentPage = "/.";
+  const onNavigate = useRouter();
 
+  const [userDropdownOpen, setUserDropdownOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [authModelOpen, setAuthModelOpen] = useState(false);
+
+  const isAuthenticated = false;
+
+  const user= {
+    name:"",
+    image: ""
+  };
+  const logOut =() => console.log("");
+  const handleOpen = () => {
+    setAuthModelOpen(true)
+    console.log("Open")
+  }
 
   return (
+    <>
     <header className="w-full">
       {/* ================= TOP BAR ================= */}
       <div className="hidden h-9 bg-[#350000] px-6 text-[13px] font-medium text-[#f7c928] lg:flex items-center justify-between tracking-wide">
@@ -82,8 +106,8 @@ export default function Header() {
             className="flex shrink-0 items-center gap-4"
           >
             {/* SG Circle */}
-            <div className="relative flex h-[66px] w-[66px] items-center justify-center rounded-full border border-[#e7b91f]">
-              <div className="absolute inset-[4px] rounded-full border border-[#e7b91f]" />
+            <div className="relative flex h-16.5 w-16.5 items-center justify-center rounded-full border border-[#e7b91f]">
+              <div className="absolute inset-1 rounded-full border border-[#e7b91f]" />
 
               <span className="font-serif text-[23px] font-bold text-[#f7d35c]">
                 SG
@@ -138,7 +162,7 @@ export default function Header() {
               className="transition-transform hover:scale-110"
             >
               <Heart
-                size={31}
+                size={25}
                 strokeWidth={1.6}
                 className="text-[#fff1c9]"
               />
@@ -148,11 +172,84 @@ export default function Header() {
             <button
               type="button"
               aria-label="Shopping cart"
-              className="flex h-12 items-center gap-2 rounded-full border border-[#cda71d] px-5 text-[#f7c928] transition-colors hover:bg-[#650707]"
+              className="flex h-8 items-center gap-2 rounded-full border border-[#cda71d] px-5 text-[#f7c928] transition-colors hover:bg-[#650707]"
             >
               <ShoppingBag size={15} strokeWidth={1.8} />
               <span className="font-bold">₹0</span>
             </button>
+          {isAuthenticated ? (
+            <div className="relative">
+              <button
+                onClick={() => setUserDropdownOpen(!userDropdownOpen)}
+                className="flex items-center gap-2 pl-2 pr-3 py-1 rounded-full bg-brand-burgundy border border-brand-gold-muted/60 text-brand-cream hover:border-brand-gold-dark transition-all cursor-pointer"
+              >
+                <Image
+                  src={user?.image ?? ""}
+                  alt={user?.name ?? "N/A"}
+                  className="w-6 h-6 rounded-full object-cover border border-brand-gold-dark"
+                  height={50}
+                  width={50}
+                />
+                <span className="hidden xl:inline text-xs font-bold text-brand-cream max-w-25 truncate">
+                  {user?.name.split(' ')[0] ?? "N/A"}
+                </span>
+                <ChevronDown className="w-3 h-3 text-brand-gold-dark" />
+              </button>
+
+              {userDropdownOpen && (
+                <div 
+                  className="absolute right-0 mt-2 w-56 bg-white rounded-2xl shadow-2xl border-2 border-brand-gold-muted py-2 z-50 text-xs animate-fade-in"
+                  onClick={() => setUserDropdownOpen(false)}
+                >
+                  <div className="px-4 py-2 border-b border-gray-100 bg-[#faf6ea]">
+                    <p className="font-bold text-brand-burgundy truncate">{user?.name}</p>
+                  </div>
+
+                  <button
+                    onClick={() => onNavigate.push('dashboard')}
+                    className="w-full text-left px-4 py-2 hover:bg-[#faf6ea] text-brand-burgundy font-semibold flex items-center gap-2"
+                  >
+                    <User className="w-4 h-4 text-brand-brown" />
+                    <span>My Dashboard</span>
+                  </button>
+
+                  <button
+                    onClick={() => onNavigate.push('orders')}
+                    className="w-full text-left px-4 py-2 hover:bg-[#faf6ea] text-brand-burgundy font-semibold flex items-center gap-2"
+                  >
+                    <Package className="w-4 h-4 text-brand-brown" />
+                    <span>My Saree Orders (1)</span>
+                  </button>
+
+                  <button
+                    onClick={() => onNavigate.push('tracking')}
+                    className="w-full text-left px-4 py-2 hover:bg-[#faf6ea] text-brand-burgundy font-semibold flex items-center gap-2"
+                  >
+                    <Truck className="w-4 h-4 text-brand-brown" />
+                    <span>Live Tracking</span>
+                  </button>
+
+                  <div className="border-t border-gray-100 my-1" />
+
+                  <button
+                    onClick={()=>logOut()}
+                    className="w-full text-left px-4 py-2 hover:bg-red-50 text-red-700 font-semibold flex items-center gap-2"
+                  >
+                    <LogOut className="w-4 h-4" />
+                    <span>Sign Out</span>
+                  </button>
+                </div>
+              )}
+            </div>
+          ) : (
+            <button
+              onClick={handleOpen}
+              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold bg-brand-burgundy text-brand-gold-dark border border-brand-gold-muted hover:hover:bg-brand-burgundy-dark hover:text-brand-gold transition-all cursor-pointer"
+            >
+              <User className="w-3.5 h-3.5" />
+              <span>Sign In</span>
+            </button>
+          )}
           </div>
 
           {/* MOBILE MENU BUTTON */}
@@ -234,10 +331,90 @@ export default function Header() {
                   ₹0
                 </button>
               </div>
+              {/* User Account / Auth Dropdown */}
+          {isAuthenticated ? (
+            <div className="relative">
+              <button
+                onClick={() => setUserDropdownOpen(!userDropdownOpen)}
+                className="flex items-center gap-2 pl-2 pr-3 py-1 rounded-full bg-brand-burgundy border border-brand-gold-muted/60 text-brand-cream hover:border-brand-gold-dark transition-all cursor-pointer"
+              >
+                <Image
+                  src={user?.image ?? ""}
+                  alt={user?.name ?? "N/A"}
+                  className="w-6 h-6 rounded-full object-cover border border-brand-gold-dark"
+                  height={50}
+                  width={50}
+                />
+                <span className="hidden xl:inline text-xs font-bold text-brand-cream max-w-25 truncate">
+                  {user?.name.split(' ')[0] ?? "N/A"}
+                </span>
+                <ChevronDown className="w-3 h-3 text-brand-gold-dark" />
+              </button>
+
+              {userDropdownOpen && (
+                <div 
+                  className="absolute right-0 mt-2 w-56 bg-white rounded-2xl shadow-2xl border-2 border-brand-gold-muted py-2 z-50 text-xs animate-fade-in"
+                  onClick={() => setUserDropdownOpen(false)}
+                >
+                  <div className="px-4 py-2 border-b border-gray-100 bg-[#faf6ea]">
+                    <p className="font-bold text-brand-burgundy truncate">{user?.name}</p>
+                  </div>
+
+                  <button
+                    onClick={() => onNavigate.push('dashboard')}
+                    className="w-full text-left px-4 py-2 hover:bg-[#faf6ea] text-brand-burgundy font-semibold flex items-center gap-2"
+                  >
+                    <User className="w-4 h-4 text-brand-brown" />
+                    <span>My Dashboard</span>
+                  </button>
+
+                  <button
+                    onClick={() => onNavigate.push('orders')}
+                    className="w-full text-left px-4 py-2 hover:bg-[#faf6ea] text-brand-burgundy font-semibold flex items-center gap-2"
+                  >
+                    <Package className="w-4 h-4 text-brand-brown" />
+                    <span>My Saree Orders (1)</span>
+                  </button>
+
+                  <button
+                    onClick={() => onNavigate.push('tracking')}
+                    className="w-full text-left px-4 py-2 hover:bg-[#faf6ea] text-brand-burgundy font-semibold flex items-center gap-2"
+                  >
+                    <Truck className="w-4 h-4 text-brand-brown" />
+                    <span>Live Tracking</span>
+                  </button>
+
+                  <div className="border-t border-gray-100 my-1" />
+
+                  <button
+                    onClick={()=>logOut()}
+                    className="w-full text-left px-4 py-2 hover:bg-red-50 text-red-700 font-semibold flex items-center gap-2"
+                  >
+                    <LogOut className="w-4 h-4" />
+                    <span>Sign Out</span>
+                  </button>
+                </div>
+              )}
+            </div>
+          ) : (
+            <button
+              onClick={() => setAuthModelOpen(true)}
+              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold bg-brand-burgundy text-brand-gold-dark border border-brand-gold-muted hover:hover:bg-brand-burgundy-dark hover:text-brand-gold transition-all cursor-pointer"
+            >
+              <User className="w-3.5 h-3.5" />
+              <span>Sign In</span>
+            </button>
+          )}
             </div>
           </div>
         )}
       </div>
     </header>
+    
+      <AuthModal 
+        isOpen={authModelOpen} 
+        onClose={()=>setAuthModelOpen(false)} 
+        />
+    </>
   );
 }

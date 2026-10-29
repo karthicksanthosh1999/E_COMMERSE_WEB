@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from "react"
 
 import { SearchForm } from "@/components/search-form"
@@ -14,6 +16,8 @@ import {
   SidebarMenuItem,
   SidebarRail,
 } from "@/components/ui/sidebar"
+import { usePathname } from "next/navigation";
+import Link from "next/link";
 
 // This is sample data.
 const data = {
@@ -24,14 +28,9 @@ const data = {
       url: "#",
       items: [
         {
-          title: "Products",
-          url: "#",
-          isActive: true
-        },
-        {
-          title: "Order Tracking",
-          url: "#",
-        },
+          title: "Orders",
+          url: "/orders",
+        }
       ],
     },
     {
@@ -49,16 +48,13 @@ const data = {
         {
           title: "Support",
           url: "#",
-        },
-        {
-          title: "Teams & Conditions",
-          url: "#",
-        },
+        }
       ],
     },
   ],
 }
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const path = usePathname();
   return (
     <Sidebar {...props}>
       <SidebarHeader>
@@ -77,8 +73,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 {item.items.map((item) => (
                   <SidebarMenuItem key={item.title}>
                     <SidebarMenuButton
-                      isActive={item.isActive}
-                      render={<a href={item.url} />}
+                      isActive={item.url === path}
+                      render={<Link href={item.url} />}
                     >
                       {item.title}
                     </SidebarMenuButton>

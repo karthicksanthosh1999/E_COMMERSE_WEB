@@ -13,6 +13,7 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar"
+import { SessionProvider } from "@/providers/AuthProviders";
 import { ReactNode } from "react";
 
 export default function Layout({children}: {children: ReactNode}) {
@@ -39,12 +40,7 @@ export default function Layout({children}: {children: ReactNode}) {
           </Breadcrumb>
         </header>
         <div className="flex flex-1 flex-col gap-4 p-4">
-          <div className="grid auto-rows-min gap-4 md:grid-cols-3">
-            <div className="aspect-video rounded-xl bg-muted/50" />
-            <div className="aspect-video rounded-xl bg-muted/50" />
-            <div className="aspect-video rounded-xl bg-muted/50" />
-          </div>
-          <div className="min-h-screen flex-1 rounded-xl bg-muted/50 md:min-h-min" />
+          {children}
         </div>
       </SidebarInset>
     </SidebarProvider>
