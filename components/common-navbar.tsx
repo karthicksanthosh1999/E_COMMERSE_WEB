@@ -49,7 +49,6 @@ export default function Header() {
   const logOut =() => console.log("");
   const handleOpen = () => {
     setAuthModelOpen(true)
-    console.log("Open")
   }
 
   return (
@@ -398,7 +397,7 @@ export default function Header() {
             </div>
           ) : (
             <button
-              onClick={() => setAuthModelOpen(true)}
+              onClick={handleOpen}
               className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold bg-brand-burgundy text-brand-gold-dark border border-brand-gold-muted hover:hover:bg-brand-burgundy-dark hover:text-brand-gold transition-all cursor-pointer"
             >
               <User className="w-3.5 h-3.5" />
@@ -413,7 +412,7 @@ export default function Header() {
     
       <AuthModel 
         open={authModelOpen} 
-        onOpenChange={()=>setAuthModelOpen(false)} 
+        onOpenChange={setAuthModelOpen}
         />
     </>
   );

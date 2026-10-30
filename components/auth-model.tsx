@@ -6,13 +6,7 @@ import {
   Eye,
   EyeOff,
   LockKeyhole,
-  Mail,
-  MessageCircle,
-  ShieldCheck,
-  Sparkles,
-  User,
   X,
-  Phone,
 } from "lucide-react";
 
 import {
@@ -23,7 +17,7 @@ import {
 
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
+import api from "@/lib/axios";
 
 type AuthMode = "signin" | "register";
 
@@ -36,9 +30,8 @@ export default function AuthModal({
   open,
   onOpenChange,
 }: AuthModalProps) {
-  const [mode, setMode] = useState<AuthMode>("register");
+  const [mode, setMode] = useState<AuthMode>("signin");
   const [showPassword, setShowPassword] = useState(false);
-  const [rememberMe, setRememberMe] = useState(true);
 
   const [formData, setFormData] = useState({
     fullName: "",
@@ -46,6 +39,14 @@ export default function AuthModal({
     whatsapp: "",
     password: "",
   });
+
+  const handleOpenChange = (nextOpen: boolean) => {
+    if (!nextOpen) {
+      setMode("signin");
+    }
+
+    onOpenChange(nextOpen);
+  };
 
   const updateField = (
     field: keyof typeof formData,
@@ -57,41 +58,19 @@ export default function AuthModal({
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    console.log({
-      mode,
-      ...formData,
-      rememberMe,
-    });
-  };
-
-  const handleDemoLogin = (user: "vip" | "patron") => {
-    if (user === "vip") {
-      setFormData({
-        fullName: "Karthick",
-        email: "karthick@example.com",
-        whatsapp: "+91 98450 12345",
-        password: "password123",
-      });
-    } else {
-      setFormData({
-        fullName: "Priyadarshini",
-        email: "priyadarshini@example.com",
-        whatsapp: "+91 98450 12345",
-        password: "password123",
-      });
-    }
+    const data = await api.post(`/api/user/login`, formData);
+    console.log(data)
   };
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
+    <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogContent
         showCloseButton={false}
         className="
           w-[calc(100%-24px)]
-          max-w-[420px]
+          max-w-105
           overflow-hidden
           rounded-[24px]
           border
@@ -117,8 +96,8 @@ export default function AuthModal({
                 className="
                   relative
                   flex
-                  h-[38px]
-                  w-[38px]
+                  h-9.5
+                  w-9.5
                   shrink-0
                   items-center
                   justify-center
@@ -127,7 +106,7 @@ export default function AuthModal({
                   border-[#e6b51e]
                 "
               >
-                <div className="absolute inset-[3px] rounded-full border border-[#e6b51e]" />
+                <div className="absolute inset-0.75 rounded-full border border-[#e6b51e]" />
 
                 <span className="font-serif text-[13px] font-bold text-[#f6c82c]">
                   SG
@@ -148,7 +127,7 @@ export default function AuthModal({
             {/* Close */}
             <button
               type="button"
-              onClick={() => onOpenChange(false)}
+              onClick={() => handleOpenChange(false)}
               aria-label="Close"
               className="
                 mt-1
@@ -164,7 +143,7 @@ export default function AuthModal({
           {/* =================================================
               AUTH TABS
           ================================================== */}
-          <div className="mt-5 flex h-[36px] rounded-full border border-[#a87911] bg-[#350000] p-[3px]">
+          <div className="mt-5 flex h-9 rounded-full border border-[#a87911] bg-[#350000] p-0.75">
 
             <button
               type="button"
@@ -237,7 +216,6 @@ export default function AuthModal({
                     updateField("fullName", e.target.value)
                   }
                   placeholder="e.g. Smt. Gayatri Devi"
-                  icon={<User size={16} />}
                 />
               </FormField>
             )}
@@ -251,7 +229,6 @@ export default function AuthModal({
                   updateField("email", e.target.value)
                 }
                 placeholder="patron@royaltextiles.com"
-                icon={<Mail size={16} />}
               />
             </FormField>
 
@@ -265,7 +242,6 @@ export default function AuthModal({
                     updateField("whatsapp", e.target.value)
                   }
                   placeholder="+91 98450 12345"
-                  icon={<Phone size={16} />}
                 />
               </FormField>
             )}
@@ -315,42 +291,12 @@ export default function AuthModal({
               </div>
             </FormField>
 
-            {/* Remember + Encryption */}
-            <div className="flex items-center justify-between pt-0.5">
-
-              <label className="flex cursor-pointer items-center gap-2">
-                <Checkbox
-                  checked={rememberMe}
-                  onCheckedChange={(checked) =>
-                    setRememberMe(checked === true)
-                  }
-                  className="
-                    h-[15px]
-                    w-[15px]
-                    rounded-[2px]
-                    border-[#8c1a0c]
-                    data-[state=checked]:border-[#680000]
-                    data-[state=checked]:bg-[#680000]
-                  "
-                />
-
-                <span className="text-[10px] text-[#a06b35]">
-                  Remember on this device
-                </span>
-              </label>
-
-              <div className="flex items-center gap-1 text-[9px] text-[#328378]">
-                <ShieldCheck size={13} />
-                256-bit Encrypted
-              </div>
-            </div>
-
             {/* CTA */}
             <Button
               type="submit"
               className="
                 mt-1
-                h-[40px]
+                h-10
                 w-full
                 rounded-full
                 bg-[#f7bd20]
@@ -373,7 +319,7 @@ export default function AuthModal({
           {/* =================================================
               FOOTNOTE
           ================================================== */}
-          <p className="mx-auto mt-5 max-w-[340px] text-center text-[9px] leading-[14px] text-[#a06b35]">
+          <p className="mx-auto mt-5 max-w-85 text-center text-[9px] leading-3.5 text-[#a06b35]">
             By signing in, you unlock Silk Mark certificates,
             order tracking, and complimentary blouse tailoring
             privileges.
@@ -402,7 +348,6 @@ function FormField({
       <label className="mb-1.5 block text-[10px] font-bold tracking-wide text-[#4b2118]">
         {label}
       </label>
-
       {children}
     </div>
   );

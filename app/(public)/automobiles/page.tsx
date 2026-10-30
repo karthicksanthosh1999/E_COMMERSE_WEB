@@ -1,9 +1,11 @@
-import React from 'react'
+'use client';
 
-const page = () => {
-  return (
-    <div>Welcome to the automobile section</div>
-  )
+import { Button } from "@/components/ui/button";
+
+export default function AutoMobilesPage() {
+  const handleAlert = ()=> {
+    console.log("Logged...")
+    alert("Alert MEssage...")
+  }
+  return <Button onClick={handleAlert}>About</Button>
 }
-
-export default page
