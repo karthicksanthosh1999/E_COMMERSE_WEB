@@ -21,17 +21,10 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Product } from "@/types/productTypes";
 import { DUMMY_PRODUCTS } from "@/data/products";
-import { useParams } from "next/navigation";
 
-interface PageProps {
-  params: Promise<{ slug: string }>;
-}
+export default function ProductDetails( { slug } : { slug: string }) {
 
-export default async function ProductDetails() {
-
-  const { slug } = useParams();
-  const product = DUMMY_PRODUCTS.find((item) => item.id === slug) ?? [];
-
+  const product: Product | undefined = DUMMY_PRODUCTS.find((item) => item.id === slug);
   const [selectedImage, setSelectedImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const [isWishlisted, setIsWishlisted] = useState(false);
@@ -42,13 +35,13 @@ export default async function ProductDetails() {
     y: 50,
   });
 
-  const variant = product.variants.find(
+  const variant = product?.variants.find(
     (item) => item.isActive
   );
 
-  const images = product.images;
+  const images = product?.images;
 
-  const attributes = product.attributes as {
+  const attributes = product?.attributes as {
     fabric?: string;
     weave?: string;
     occasion?: string;
@@ -59,15 +52,15 @@ export default async function ProductDetails() {
     zariColor?: string;
   };
 
-  const reviewCount = product.reviews.length;
+  const reviewCount = product?.reviews.length ?? 0;
 
-  const averageRating =
-    reviewCount > 0
-      ? product.reviews.reduce(
-          (total, review) => total + review.rating,
-          0
-        ) / reviewCount
-      : 0;
+const averageRating =
+  reviewCount > 0 && product
+    ? product.reviews.reduce(
+        (total, review) => total + review.rating,
+        0
+      ) / reviewCount
+    : 0;
 
   const discount =
     variant && variant.mrp > variant.price
@@ -76,7 +69,7 @@ export default async function ProductDetails() {
         )
       : 0;
 
-  const currentImage = images[selectedImage];
+  const currentImage = images?.[selectedImage]
 
   const handleMouseMove = (
     event: React.MouseEvent<HTMLDivElement>
@@ -104,18 +97,18 @@ export default async function ProductDetails() {
   };
 
   const nextImage = () => {
-    if (images.length === 0) return;
+    if (images?.length === 0) return;
 
     setSelectedImage((current) =>
-      current === images.length - 1 ? 0 : current + 1
+      images?.length  && current === images?.length  - 1 ? 0 : current + 1
     );
   };
 
   const previousImage = () => {
-    if (images.length === 0) return;
+    if (images?.length === 0) return;
 
     setSelectedImage((current) =>
-      current === 0 ? images.length - 1 : current - 1
+      images?.length && current === 0 ? images?.length - 1 : current - 1
     );
   };
 
@@ -156,7 +149,7 @@ export default async function ProductDetails() {
           <span>/</span>
 
           <span className="truncate text-[#5a0000]">
-            {product.title}
+            {product?.title}
           </span>
         </div>
 
@@ -169,16 +162,16 @@ export default async function ProductDetails() {
           <div className="flex flex-col-reverse gap-4 sm:flex-row">
 
             {/* Thumbnails */}
-            <div className="flex gap-3 overflow-x-auto sm:w-[85px] sm:flex-col sm:overflow-visible">
-              {images.map((image, index) => (
+            <div className="flex gap-3 overflow-x-auto sm:w-21.25 sm:flex-col sm:overflow-visible">
+              {images && images.map((image, index) => (
                 <button
                   key={image.id}
                   type="button"
                   onClick={() => setSelectedImage(index)}
                   className={`
                     relative
-                    h-[75px]
-                    w-[65px]
+                    h-18.75
+                    w-16.25
                     shrink-0
                     overflow-hidden
                     rounded-lg
@@ -194,7 +187,7 @@ export default async function ProductDetails() {
                 >
                   <Image
                     src={image.url}
-                    alt={image.altText ?? product.title}
+                    alt={image.altText ?? "N/A"}
                     fill
                     sizes="65px"
                     className="object-cover"
@@ -210,7 +203,7 @@ export default async function ProductDetails() {
                 className="
                   group
                   relative
-                  aspect-[4/5]
+                  aspect-4/5
                   overflow-hidden
                   rounded-2xl
                   border
@@ -224,10 +217,7 @@ export default async function ProductDetails() {
                 {currentImage ? (
                   <Image
                     src={currentImage.url}
-                    alt={
-                      currentImage.altText ??
-                      product.title
-                    }
+                    alt={currentImage.altText ?? ""}
                     fill
                     priority
                     sizes="(max-width: 768px) 100vw, 50vw"
@@ -278,7 +268,7 @@ export default async function ProductDetails() {
                 </div>
 
                 {/* Navigation */}
-                {images.length > 1 && (
+                {images && images.length > 1 && (
                   <>
                     <button
                       type="button"
@@ -335,7 +325,7 @@ export default async function ProductDetails() {
 
               {/* Mobile Image Count */}
               <div className="mt-3 text-center text-xs text-muted-foreground sm:hidden">
-                {selectedImage + 1} / {images.length}
+                {selectedImage + 1} / {images?.length}
               </div>
             </div>
           </div>
@@ -353,7 +343,7 @@ export default async function ProductDetails() {
 
             {/* Title */}
             <h1 className="mt-2 font-serif text-3xl font-bold leading-tight text-[#4b0000] sm:text-4xl">
-              {product.title}
+              {product?.title}
             </h1>
 
             {/* Rating */}
@@ -389,7 +379,7 @@ export default async function ProductDetails() {
 
             {/* Description */}
             <p className="text-[15px] leading-7 text-[#66594d]">
-              {product.description}
+              {product?.description}
             </p>
 
             {/* Product Attributes */}
@@ -608,7 +598,7 @@ export default async function ProductDetails() {
 
           <div className="mt-6 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
 
-            {product.reviews.map((review) => (
+            {product?.reviews.map((review) => (
               <div
                 key={review.id}
                 className="rounded-xl border border-[#eadfc8] bg-[#fffaf2] p-5"
