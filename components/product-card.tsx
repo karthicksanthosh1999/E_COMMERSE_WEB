@@ -94,7 +94,7 @@ const ProductCard = ({
   );
 
   return (
-    <div className="group overflow-hidden h-auto w-87.5 z-0 rounded-2xl border border-[#e9d9a9] bg-[#fffefa] shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
+    <div className="group overflow-hidden h-auto w-75 md:w-87.5 z-0 rounded-2xl border border-[#e9d9a9] bg-[#fffefa] shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
       {/* Product Image */}
       <div className="relative aspect-3/4 overflow-hidden bg-[#f5f0e7]">
         {currentImage?.url && (
@@ -102,8 +102,18 @@ const ProductCard = ({
             src={currentImage.url}
             alt={currentImage.altText ?? "N/A"}
             fill
-            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-            className="object-cover transition-transform duration-500 group-hover:scale-105"
+            sizes="
+            (max-width: 640px) 100vw,
+            (max-width: 1024px) 50vw,
+            40vw
+          "
+          className="
+            object-cover
+            transition-transform
+            duration-500
+            ease-in-out
+            sm:group-hover:scale-105
+          "
           />
         )}
 

@@ -50,7 +50,7 @@ export default function HeroSection() {
             </p>
           </div>
 
-          <h1 className="max-w-2xl font-serif text-5xl font-bold leading-[1.05] tracking-tight text-white sm:text-6xl lg:text-7xl">
+          <h1 className="max-w-2xl font-serif text-5xl font-bold leading-[1.05] tracking-tight text-white sm:text-6xl">
             Find the saree
             <span className="mt-1 block italic text-brand-cream">
               that feels like you.
@@ -69,7 +69,7 @@ export default function HeroSection() {
               size="lg"
               className="h-14 rounded-full bg-brand-gold px-8 text-base font-bold text-brand-burgundy shadow-lg shadow-black/10 hover:bg-brand-gold-dark"
             >
-              <Link href="/products">
+              <Link href="/dresses" className="flex items-center">
                 Explore Collection
                 <ArrowDown className="ml-2 size-5" />
               </Link>
@@ -79,10 +79,12 @@ export default function HeroSection() {
               size="lg"
               variant="outline"
               className="h-14 rounded-full border-brand-gold/80 bg-transparent px-7 text-base font-semibold text-brand-cream hover:bg-brand-gold/10 hover:text-brand-gold"
+              disabled
+              title="Coming Soon"
             >
-              <Link href={`https://wa.me/${whatsappNumber}`}>
+              <Link href={`https://wa.me/${whatsappNumber}`} className="flex items-center">
                 <Sparkles className="mr-2 size-5 text-brand-gold" />
-                Live Video Saree Drape
+                Ask AI
               </Link>
             </Button>
           </div>
@@ -123,7 +125,7 @@ export default function HeroSection() {
 
           <div className="relative h-120 overflow-hidden rounded-t-[220px] rounded-b-[30px] border border-brand-gold/80 bg-brand-brown sm:h-154 lg:h-157.5">
             <Image
-              src="/images/hero-saree.jpg"
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuBUyzrqL7VUOO3uK9VZcPad4kMwqWq8ObK-ccob8aO71qYi_aP82KQ_aXiUah9p77CPbohaguRRb7meAi6T-ZP2VqpMMlndvqc09wevbrv5XCRl_xbOJ1MdxuIk2nwm3TSA5GIwEYNZwJCaO0vnrtVtjooHeJKw_J6t8yUWBw00f7T0lNCt0mOnwA0DJIVPxif58J0hLABMxfst5ZbVIeahjSuHuev0yzewKI3BeC1R"
               alt="Traditional green Kanchipuram silk saree with gold zari border"
               fill
               priority

@@ -1,8 +1,14 @@
-import React from 'react'
+import HeroSection from '@/components/hero';
+import DressesPage from '../dresses/page';
+import WeaverHeritage from '@/components/CTA';
 
 const page = () => {
   return (
-    <div>Welcome to the home page</div>
+    <>
+      <HeroSection />
+      <DressesPage />
+      <WeaverHeritage />
+    </>
   )
 }
 

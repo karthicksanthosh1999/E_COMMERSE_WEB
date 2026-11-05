@@ -53,7 +53,7 @@ export default function Header() {
 
   return (
     <>
-    <header className="w-full">
+    <header className="w-full sticky top-0 z-50">
       {/* ================= TOP BAR ================= */}
       <div className="hidden h-9 bg-[#350000] px-6 text-[13px] font-medium text-[#f7c928] lg:flex items-center justify-between tracking-wide">
         {/* Left */}
@@ -105,13 +105,12 @@ export default function Header() {
             className="flex shrink-0 items-center gap-4"
           >
             {/* SG Circle */}
-            <div className="relative flex h-16.5 w-16.5 items-center justify-center rounded-full border border-[#e7b91f]">
-              <div className="absolute inset-1 rounded-full border border-[#e7b91f]" />
-
-              <span className="font-serif text-[23px] font-bold text-[#f7d35c]">
-                SG
-              </span>
-            </div>
+              <Image
+                src="/logo.png"
+                alt="SG Logo"
+                width={66}
+                height={66}
+              />
 
             {/* Brand name */}
             <div className="hidden sm:block">
@@ -409,11 +408,13 @@ export default function Header() {
         )}
       </div>
     </header>
-    
+    {
+      authModelOpen &&
       <AuthModel 
-        open={authModelOpen} 
-        onOpenChange={setAuthModelOpen}
-        />
+      open={authModelOpen} 
+      onOpenChange={setAuthModelOpen}
+      />
+    }
     </>
   );
 }

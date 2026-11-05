@@ -1,3 +1,4 @@
+import Loading from "@/app/loading";
 import ProductDetails from "@/components/product-details";
 import { Suspense } from "react";
 
@@ -7,7 +8,7 @@ interface PageProps {
 
 export default function ProductDetailsPage({ params }: PageProps) {
   return (
-    <Suspense fallback={<div>Loading product...</div>}>
+    <Suspense fallback={<Loading />}>
       <ProductDetailsWrapper params={params} />
     </Suspense>
   );

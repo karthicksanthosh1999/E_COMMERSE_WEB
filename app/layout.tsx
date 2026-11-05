@@ -4,6 +4,7 @@ import "./globals.css";
 
 import QueryProvider from "@/providers/QueryProvider";
 import { SessionProvider } from "@/providers/AuthProviders";
+import Loading from "./loading";
 
 const poppins = Poppins({
   variable: "--font-poppins",
@@ -27,6 +28,7 @@ export default function RootLayout({
         <QueryProvider>
           <SessionProvider>
             {children}
+            {/* <Loading /> */}
           </SessionProvider>
         </QueryProvider>
       </body>
