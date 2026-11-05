@@ -24,11 +24,11 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${poppins.variable} h-full antialiased`}>
       <body className="flex min-h-full flex-col">
-        {/* <QueryProvider> */}
-          {/* <SessionProvider> */}
+        <QueryProvider>
+          <SessionProvider>
             {children}
-          {/* </SessionProvider> */}
-        {/* </QueryProvider> */}
+          </SessionProvider>
+        </QueryProvider>
       </body>
     </html>
   );

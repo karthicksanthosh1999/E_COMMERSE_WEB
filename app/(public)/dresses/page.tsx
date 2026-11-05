@@ -13,7 +13,7 @@ export default function DressesPage() {
           <ProductCard
             key={product.id}
             product={product}
-            onQuickView={product.id}
+            onQuickView={`/dresses/${product.id}`}
           />
         ))}
       </div>
