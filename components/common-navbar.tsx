@@ -17,16 +17,15 @@ import {
   Truck,
   LogOut,
   ChevronDown,
-  LogIn,
 } from "lucide-react";
-import { usePathname, useRouter } from "next/navigation";
-import { useSession } from "@/providers/AuthProviders";
 import Image from "next/image";
 import AuthModel from "./auth-model";
+import { useRouter } from "next/navigation";
+import { useSession } from "@/providers/AuthProviders";
 
 const navItems = [
   { label: "Home", href: "/home" },
-  { label: "Dresses", href: "/dresses"},
+  { label: "Our Products", href: "/products"},
   { label: "Fruits & Vegs", href: "/grocery" },
   { label: "Automobiles", href: "/automobiles" },
 ];
@@ -40,13 +39,8 @@ export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [authModelOpen, setAuthModelOpen] = useState(false);
 
-  const isAuthenticated = false;
-
-  const user= {
-    name:"",
-    image: ""
-  };
-  const logOut =() => console.log("");
+  const { isAuthenticated, user, logOut } = useSession();
+  
   const handleOpen = () => {
     setAuthModelOpen(true)
   }
@@ -90,7 +84,7 @@ export default function Header() {
 
           <div className="flex items-center gap-1">
             <MessageCircle size={14} />
-            WhatsApp: +91 98450 12345
+            WhatsApp: +91 {process.env.NEXT_PUBLIC_CLIENT_MOBILE_NO}
           </div>
         </div>
       </div>
@@ -182,7 +176,7 @@ export default function Header() {
                 className="flex items-center gap-2 pl-2 pr-3 py-1 rounded-full bg-brand-burgundy border border-brand-gold-muted/60 text-brand-cream hover:border-brand-gold-dark transition-all cursor-pointer"
               >
                 <Image
-                  src={user?.image ?? ""}
+                  src={user?.image ?? "/default_user.jpg"}
                   alt={user?.name ?? "N/A"}
                   className="w-6 h-6 rounded-full object-cover border border-brand-gold-dark"
                   height={50}
@@ -204,7 +198,7 @@ export default function Header() {
                   </div>
 
                   <button
-                    onClick={() => onNavigate.push('dashboard')}
+                    onClick={() => onNavigate.push('/dashboard')}
                     className="w-full text-left px-4 py-2 hover:bg-[#faf6ea] text-brand-burgundy font-semibold flex items-center gap-2"
                   >
                     <User className="w-4 h-4 text-brand-brown" />
@@ -212,19 +206,19 @@ export default function Header() {
                   </button>
 
                   <button
-                    onClick={() => onNavigate.push('orders')}
+                    onClick={() => onNavigate.push('/orders')}
                     className="w-full text-left px-4 py-2 hover:bg-[#faf6ea] text-brand-burgundy font-semibold flex items-center gap-2"
                   >
                     <Package className="w-4 h-4 text-brand-brown" />
-                    <span>My Saree Orders (1)</span>
+                    <span>My Orders</span>
                   </button>
 
                   <button
-                    onClick={() => onNavigate.push('tracking')}
+                    onClick={() => onNavigate.push('/tracking')}
                     className="w-full text-left px-4 py-2 hover:bg-[#faf6ea] text-brand-burgundy font-semibold flex items-center gap-2"
                   >
                     <Truck className="w-4 h-4 text-brand-brown" />
-                    <span>Live Tracking</span>
+                    <span>Tracking</span>
                   </button>
 
                   <div className="border-t border-gray-100 my-1" />

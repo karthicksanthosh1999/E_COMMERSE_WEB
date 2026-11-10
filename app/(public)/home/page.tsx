@@ -1,6 +1,6 @@
 import HeroSection from '@/components/hero';
-import DressesPage from '../dresses/page';
 import WeaverHeritage from '@/components/CTA';
+import DressesPage from '../products/dresses/page';
 
 const page = () => {
   return (

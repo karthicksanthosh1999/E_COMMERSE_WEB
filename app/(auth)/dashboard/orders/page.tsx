@@ -1,9 +1,9 @@
-import React from 'react'
+import OrderItems from '@/components/order-items';
 
 const page = () => {
   return (
     <div>
-      <h1>Orders pages</h1>
+      <OrderItems />
     </div>
   )
 }

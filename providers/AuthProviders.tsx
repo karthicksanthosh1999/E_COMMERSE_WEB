@@ -40,7 +40,6 @@ export const SessionProvider = ({
     const fetchLoggedUser = async () => {
       try {
         const response = await api.get("/api/auth/me");
-
         if (!ignore) {
           setUser(response?.data?.data ?? null);
         }
@@ -69,7 +68,7 @@ export const SessionProvider = ({
       await api.post("/api/auth/logout");
 
       setUser(null);
-
+      window.location.reload()
       toast.success("User Logout Successfully");
 
       push("/");

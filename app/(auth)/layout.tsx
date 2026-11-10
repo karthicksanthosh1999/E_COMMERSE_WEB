@@ -12,8 +12,7 @@ import {
   SidebarInset,
   SidebarProvider,
   SidebarTrigger,
-} from "@/components/ui/sidebar"
-import { SessionProvider } from "@/providers/AuthProviders";
+} from "@/components/ui/sidebar";
 import { ReactNode } from "react";
 
 export default function Layout({children}: {children: ReactNode}) {

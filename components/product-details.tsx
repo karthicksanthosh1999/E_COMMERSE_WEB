@@ -3,10 +3,8 @@
 import { useState } from "react";
 import Image from "next/image";
 import {
-  Heart,
   Minus,
   Plus,
-  ShoppingBag,
   Star,
   Truck,
   ShieldCheck,
@@ -14,6 +12,7 @@ import {
   ChevronLeft,
   ChevronRight,
   ZoomIn,
+  Loader2,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -21,13 +20,21 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Product } from "@/types/productTypes";
 import { DUMMY_PRODUCTS } from "@/data/products";
+import CustomerReviewsSlider from "./customer-reviews";
+import { useSession } from "@/providers/AuthProviders";
+import AuthModal from "./auth-model";
+import Breadcrumbs from "./common-breadcrumbs";
 
 export default function ProductDetails( { slug } : { slug: string }) {
 
   const product: Product | undefined = DUMMY_PRODUCTS.find((item) => item.id === slug);
+  const { isAuthenticated, loading: authLoading } = useSession();
+
   const [selectedImage, setSelectedImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
-  const [isWishlisted, setIsWishlisted] = useState(false);
+  const [openAuthModel, setOpenAuthModel] = useState(false);
+
+  console.log(isAuthenticated)
 
   const [zoom, setZoom] = useState({
     active: false,
@@ -122,6 +129,25 @@ const averageRating =
     );
   };
 
+  const handleShare = () => {    
+    // 1. Get your product image URL
+    const imageUrl = product?.images?.[0].url || 'https://yourwebsite.com';
+
+    // 2. Build the message with the image link at the bottom
+    const message = encodeURIComponent(
+      `Hello Sri Gowri Royal Textiles!\n` +
+      `I am interested in buying:\n` +
+      `*${product?.title}* (${product?.description})\n` +
+      `Price: ₹${100}\n\n` +
+      `Quantity: ${quantity} \n\n`+
+      `Product Image: ${imageUrl}\n\n` + // <-- WhatsApp will generate a preview here
+      `Could you please share more high-res photos/video drape and estimated delivery date?`
+    );
+    
+    window.open(`https://wa.me/8220942384?text=${message}`, '_blank');
+  };
+
+
   if (!variant) {
     return (
       <div className="mx-auto max-w-7xl px-6 py-20">
@@ -139,19 +165,10 @@ const averageRating =
           PRODUCT SECTION
       ====================================================== */}
 
-      <section className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 lg:py-14">
+      <section className="mx-auto container px-4 py-8 sm:px-6 lg:px-8 lg:py-14">
 
         {/* Breadcrumb */}
-        <div className="mb-8 flex items-center gap-2 text-sm text-muted-foreground">
-          <span>Home</span>
-          <span>/</span>
-          <span>Sarees</span>
-          <span>/</span>
-
-          <span className="truncate text-[#5a0000]">
-            {product?.title}
-          </span>
-        </div>
+        <Breadcrumbs />
 
         <div className="grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:gap-14">
 
@@ -496,67 +513,27 @@ const averageRating =
 
             {/* Actions */}
             <div className="mt-7 flex gap-3">
-
+              {
+                
+               isAuthenticated 
+               ?
               <Button
-                className="
-                  h-12
-                  flex-1
-                  rounded-full
-                  bg-[#5a0000]
-                  font-semibold
-                  text-[#fff4d5]
-                  hover:bg-[#720000]
+                onClick={handleShare}
+                className="h-12 flex-1 rounded-full cursor-pointer bg-[#f5c326] font-semibold text-brand-burgundy hover:bg-[#ffd84c]
                 "
               >
-                <ShoppingBag size={18} />
-                Add to Cart
+                Order On WhatsApp
               </Button>
-
-              <Button
-                className="
-                  h-12
-                  flex-1
-                  rounded-full
-                  bg-[#f5c326]
-                  font-semibold
-                  text-[#4b0000]
-                  hover:bg-[#ffd84c]
+              :
+                <Button
+                onClick={()=>setOpenAuthModel(true)}
+                className="h-12 flex-1 rounded-full cursor-pointer bg-[#f5c326] font-semibold text-brand-burgundy hover:bg-[#ffd84c]
                 "
               >
-                Buy Now
+                {authLoading ? <span className="flex items-center"><Loader2 className="animate-spin"/>Loading...</span> : "Sign in first"}
               </Button>
-
-              <button
-                type="button"
-                onClick={() =>
-                  setIsWishlisted((current) => !current)
-                }
-                aria-label="Add to wishlist"
-                className="
-                  flex
-                  h-12
-                  w-12
-                  shrink-0
-                  items-center
-                  justify-center
-                  rounded-full
-                  border
-                  border-[#d7c397]
-                  bg-white
-                  transition
-                  hover:border-[#b38716]
-                "
-              >
-                <Heart
-                  size={20}
-                  className={
-                    isWishlisted
-                      ? "fill-[#8a0000] text-[#8a0000]"
-                      : "text-[#5a0000]"
-                  }
-                />
-              </button>
-
+              }
+             
             </div>
 
             {/* Benefits */}
@@ -588,45 +565,16 @@ const averageRating =
       {/* =====================================================
           REVIEWS
       ====================================================== */}
-
-      <section className="border-t border-[#eadfc8] bg-white">
-        <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-
-          <h2 className="font-serif text-2xl font-bold text-[#4b0000]">
-            Customer Reviews
-          </h2>
-
-          <div className="mt-6 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-
-            {product?.reviews.map((review) => (
-              <div
-                key={review.id}
-                className="rounded-xl border border-[#eadfc8] bg-[#fffaf2] p-5"
-              >
-                <div className="flex items-center gap-1">
-                  {[1, 2, 3, 4, 5].map((star) => (
-                    <Star
-                      key={star}
-                      size={14}
-                      className={
-                        star <= review.rating
-                          ? "fill-[#e9b820] text-[#e9b820]"
-                          : "text-[#d7c8aa]"
-                      }
-                    />
-                  ))}
-                </div>
-
-                <p className="mt-3 text-sm leading-6 text-[#66594d]">
-                  {review.comment}
-                </p>
-              </div>
-            ))}
-
-          </div>
-        </div>
-      </section>
-
+      {
+        product && product?.reviews?.length > 0 &&
+      <div className="w-full">
+        <CustomerReviewsSlider productReviews={product?.reviews} /> 
+      </div>
+      }
+      {
+        openAuthModel &&
+        <AuthModal onOpenChange={setOpenAuthModel} open={openAuthModel} />
+      }
     </main>
   );
 }

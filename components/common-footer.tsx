@@ -7,6 +7,7 @@ import {
   ShieldCheck,
   Award,
 } from "lucide-react";
+import Image from "next/image";
 
 const heritageLinks = [
   "Pure Kanjeevaram Pattu",
@@ -126,9 +127,7 @@ export default function Footer() {
                 <div className="relative flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-[#e2b51e]">
                   <div className="absolute inset-0.75 rounded-full border border-[#e2b51e]" />
 
-                  <span className="font-serif text-sm font-bold text-[#f7c928]">
-                    SG
-                  </span>
+                  <Image src={'/Code_Generated_Image.png'} alt="logo" height={100} width={100} />
                 </div>
 
                 <div>
@@ -246,7 +245,7 @@ export default function Footer() {
                 </p>
 
                 <p className="text-[9px] font-medium text-[#f5c324]">
-                  +91 98450 12345
+                  +91 {process.env.NEXT_PUBLIC_CLIENT_MOBILE_NO}
                 </p>
               </div>
             </div>

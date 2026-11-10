@@ -60,8 +60,11 @@ export default function AuthModal({
 
   const handleSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const data = await api.post(`/api/user/login`, formData);
-    console.log(data)
+    const data = await api.post(`/api/auth/login`, formData);
+    if(data.data?.statusCode === 200){
+      handleOpenChange(false)
+      window.location.reload()
+    }
   };
 
   return (

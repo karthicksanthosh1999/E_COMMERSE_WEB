@@ -7,12 +7,16 @@ import { useState } from "react";
 import {
   Heart,
   Eye,
-  ShoppingBag,
   MessageCircle,
   Star,
+  Loader2,
 } from "lucide-react";
 import { Product, Variant } from "@/types/productTypes";
 import { useRouter } from "next/navigation";
+import AuthModal from "./auth-model";
+import { useSession } from "@/providers/AuthProviders";
+import { formatCurrency } from "@/lib/format-currency";
+import { Button } from "./ui/button";
 
 interface ProductCardProps {
   product: Product;
@@ -37,12 +41,13 @@ const COLOR_MAP: Record<string, string> = {
 
 const ProductCard = ({
   product,
-  onAddToBag,
   onQuickView,
 }: ProductCardProps) => {
   const navigate = useRouter();
+  const { isAuthenticated, loading } = useSession()
 
   const [isWishlisted, setIsWishlisted] = useState(false);
+  const [openAuthModel, setOpenAuthModel] = useState(false)
 
   // Get active variant
   const activeVariant =
@@ -86,12 +91,23 @@ const ProductCard = ({
     ? COLOR_MAP[color.toLowerCase()] ?? "#B99A76"
     : undefined;
 
-  const formatPrice = (price: number) =>
-    `₹${price.toLocaleString("en-IN")}`;
+  const whatsappMessage = () => {    
+    // 1. Get your product image URL
+    const imageUrl = product?.images?.[0].url || 'https://yourwebsite.com';
 
-  const whatsappMessage = encodeURIComponent(
-    `Hi, I am interested in ${product.title}. SKU: ${activeVariant?.sku}`
-  );
+    // 2. Build the message with the image link at the bottom
+    const message = encodeURIComponent(
+      `Hello Sri Gowri Royal Textiles!\n` +
+      `I am interested in buying:\n` +
+      `*${product?.title}* (${product?.description})\n` +
+      `Price: ₹${100}\n\n` +
+      `Quantity: 1 \n\n`+
+      `Product Image: ${imageUrl}\n\n` + // <-- WhatsApp will generate a preview here
+      `Could you please share more high-res photos/video drape and estimated delivery date?`
+    );
+    
+    window.open(`https://wa.me/${process.env.NEXT_PUBLIC_CLIENT_MOBILE_NO}?text=${message}`, '_blank');
+  }
 
   return (
     <div className="group overflow-hidden h-auto w-75 md:w-87.5 z-0 rounded-2xl border border-[#e9d9a9] bg-[#fffefa] shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
@@ -217,12 +233,12 @@ const ProductCard = ({
           {activeVariant && (
             <>
               <span className="text-lg font-extrabold text-[#400d09]">
-                {formatPrice(activeVariant.price)}
+                {formatCurrency(activeVariant.price)}
               </span>
 
               {activeVariant.mrp > activeVariant.price && (
                 <span className="text-xs text-gray-400 line-through">
-                  {formatPrice(activeVariant.mrp)}
+                  {formatCurrency(activeVariant.mrp)}
                 </span>
               )}
             </>
@@ -230,33 +246,26 @@ const ProductCard = ({
         </div>
 
         {/* Action Buttons */}
-        <div className="mt-4 grid grid-cols-2 gap-2">
-
-          <a
-            href={`https://wa.me/?text=${whatsappMessage}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center justify-center gap-1.5 rounded-xl border border-emerald-300 bg-emerald-50 py-2 text-[11px] font-semibold text-emerald-800 transition hover:bg-emerald-100"
+        <div className="mt-4 grid gap-2">
+          {
+            isAuthenticated ? (
+          <Button
+            onClick={whatsappMessage}
+            variant={'default'}
+            className="flex items-center justify-center gap-1.5 rounded-xl border border-brand-gold bg-emerald-50 py-2 text-[11px] font-semibold text-emerald-800 transition hover:bg-emerald-100 cursor-pointer"
           >
             <MessageCircle size={14} />
             WhatsApp
-          </a>
-
-          <button
+          </Button>
+            ) : (  <button
             type="button"
             disabled={!activeVariant}
-            onClick={() => {
-              console.log("Clicked")
-              if (activeVariant) {
-                onAddToBag?.(product, activeVariant);
-              }
-            }}
-            className="flex items-center justify-center gap-1.5 rounded-xl bg-[#490c08] py-2 text-[11px] font-semibold text-white transition hover:bg-[#701810] disabled:opacity-50 cursor-pointer"
+            className="flex items-center justify-center gap-1.5 rounded-xl bg-[#490c08] py-2 text-[11px] font-semibold text-brand-gold transition hover:bg-[#701810] disabled:opacity-50 cursor-pointer"
           >
-            <ShoppingBag size={14} />
-            Add to Bag
-          </button>
-
+            {loading ? <span className="flex items-center gap-1"><Loader2 className="animate-spin"/>Loading...</span> : "Login First"}
+          </button>)
+          }
+          <AuthModal onOpenChange={setOpenAuthModel} open={openAuthModel} />
         </div>
       </div>
     </div>

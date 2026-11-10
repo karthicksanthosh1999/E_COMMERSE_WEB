@@ -24,7 +24,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
-import axios from "axios";
 import api from "@/lib/axios";
 
 interface UserProfileData {
@@ -184,7 +183,7 @@ export default function UserProfile() {
             My Account
           </p>
 
-          <h1 className="mt-2 font-[var(--font-playfair)] text-3xl font-bold text-[#781F3A] sm:text-4xl">
+          <h1 className="mt-2 font-[var(--font-playfair)] text-3xl text-[#781F3A] sm:text-4xl">
             Personal Profile
           </h1>
 

@@ -1,9 +1,12 @@
+import Breadcrumbs from "@/components/common-breadcrumbs";
 import ProductCard from "@/components/product-card";
 import { DUMMY_PRODUCTS } from "@/data/products";
 
 export default function DressesPage() {
   return (
     <main className="mx-auto max-w-full px-4 py-8">
+      {/* Breadcrumb */}
+        <Breadcrumbs />
       <h1 className="mb-6 text-2xl font-bold">
         Our Saree Collection
       </h1>
@@ -13,11 +16,10 @@ export default function DressesPage() {
           <ProductCard
             key={product.id}
             product={product}
-            onQuickView={`/dresses/${product.id}`}
+            onQuickView={`/products/dresses/${product.id}`}
           />
         ))}
       </div>
-
     </main>
   );
 }
