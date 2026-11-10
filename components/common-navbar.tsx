@@ -20,11 +20,11 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import AuthModel from "./auth-model";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useSession } from "@/providers/AuthProviders";
 
 const navItems = [
-  { label: "Home", href: "/home" },
+  { label: "Home", href: "/" },
   { label: "Our Products", href: "/products"},
   { label: "Fruits & Vegs", href: "/grocery" },
   { label: "Automobiles", href: "/automobiles" },
@@ -32,7 +32,7 @@ const navItems = [
 
 export default function Header() {
   
-  const currentPage = "/.";
+  const currentPage = usePathname();
   const onNavigate = useRouter();
 
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
@@ -53,13 +53,10 @@ export default function Header() {
         {/* Left */}
         <div className="flex items-center gap-2 whitespace-nowrap">
           <Sparkles size={14} strokeWidth={1.8} />
-
           <span>
             ESTD. 1982
           </span>
-
           <span className="opacity-60">•</span>
-
           <span>
             KANCHIPURAM & VARANASI WEAVER COLLECTIVE
           </span>
@@ -72,16 +69,6 @@ export default function Header() {
 
         {/* Right */}
         <div className="flex items-center gap-5 whitespace-nowrap">
-          <Link
-            href="/video-shopping"
-            className="flex items-center gap-1 underline underline-offset-2 hover:text-white transition-colors"
-          >
-            <Phone size={13} />
-            Book Live Video Shopping
-          </Link>
-
-          <span className="opacity-60">•</span>
-
           <div className="flex items-center gap-1">
             <MessageCircle size={14} />
             WhatsApp: +91 {process.env.NEXT_PUBLIC_CLIENT_MOBILE_NO}
@@ -147,28 +134,6 @@ export default function Header() {
 
           {/* ACTIONS */}
           <div className="ml-7 hidden items-center gap-4 lg:flex">
-            {/* Wishlist */}
-            <button
-              type="button"
-              aria-label="Wishlist"
-              className="transition-transform hover:scale-110"
-            >
-              <Heart
-                size={25}
-                strokeWidth={1.6}
-                className="text-[#fff1c9]"
-              />
-            </button>
-
-            {/* Cart */}
-            <button
-              type="button"
-              aria-label="Shopping cart"
-              className="flex h-8 items-center gap-2 rounded-full border border-[#cda71d] px-5 text-[#f7c928] transition-colors hover:bg-[#650707]"
-            >
-              <ShoppingBag size={15} strokeWidth={1.8} />
-              <span className="font-bold">₹0</span>
-            </button>
           {isAuthenticated ? (
             <div className="relative">
               <button
@@ -270,7 +235,7 @@ export default function Header() {
                   onClick={() => setMobileOpen(false)}
                   className={`flex items-center gap-2 rounded-lg px-4 py-3 text-[16px] font-semibold transition-colors hover:bg-[#5c0909] ${
                     item.href === currentPage
-                      ? "text-[#f5c525]"
+                      ? "text-brand-gold"
                       : "text-[#f9e8cf]"
                   }`}
                 >
@@ -289,41 +254,6 @@ export default function Header() {
 
             {/* Mobile Actions */}
             <div className="mt-5 flex flex-col gap-3 border-t border-[#711010] pt-5">
-              <Link
-                href="/sarees"
-                className="flex h-12 items-center justify-center rounded-full border border-[#e8bd2b] font-bold text-[#fff5d6]"
-              >
-                Shop Sarees
-              </Link>
-
-              <Link
-                href="/products/add"
-                className="flex h-12 items-center justify-center gap-2 rounded-full bg-[#f7c324] font-bold text-[#3d0000]"
-              >
-                <Plus size={19} />
-                Add Products
-              </Link>
-
-              <div className="flex items-center justify-center gap-8 pt-2">
-                <button
-                  type="button"
-                  aria-label="Wishlist"
-                  className="flex items-center gap-2 text-[#fff1c9]"
-                >
-                  <Heart size={24} />
-                  Wishlist
-                </button>
-
-                <button
-                  type="button"
-                  aria-label="Shopping cart"
-                  className="flex items-center gap-2 text-[#f7c928]"
-                >
-                  <ShoppingBag size={23} />
-                  ₹0
-                </button>
-              </div>
-              {/* User Account / Auth Dropdown */}
           {isAuthenticated ? (
             <div className="relative">
               <button

@@ -112,7 +112,10 @@ const ProductCard = ({
   return (
     <div className="group overflow-hidden h-auto w-75 md:w-87.5 z-0 rounded-2xl border border-[#e9d9a9] bg-[#fffefa] shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
       {/* Product Image */}
-      <div className="relative aspect-3/4 overflow-hidden bg-[#f5f0e7]">
+      <div 
+      className="relative aspect-3/4 overflow-hidden bg-[#f5f0e7] cursor-pointer"
+      onClick={() => navigate.push(onQuickView)}
+      >
         {currentImage?.url && (
           <Image
             src={currentImage.url}
@@ -198,7 +201,7 @@ const ProductCard = ({
         </div>
 
         {/* Title */}
-        <Link href={`/dresses/${product.slug}`}>
+        <Link href={`/products/dresses/${product.slug}`}>
           <h3 className="truncate text-sm font-bold text-[#400d09] hover:text-[#9b5c20]">
             {product.title}
           </h3>

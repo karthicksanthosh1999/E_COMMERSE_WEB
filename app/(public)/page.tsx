@@ -1,8 +1,8 @@
 import HeroSection from '@/components/hero';
 import WeaverHeritage from '@/components/CTA';
-import DressesPage from '../products/dresses/page';
+import DressesPage from './products/dresses/page';
 
-const page = () => {
+const Home = () => {
   return (
     <>
       <HeroSection />
@@ -12,4 +12,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Home

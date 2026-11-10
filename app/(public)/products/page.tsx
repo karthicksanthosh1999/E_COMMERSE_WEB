@@ -3,17 +3,12 @@ import ProductCard from '@/components/product-card';
 import { DUMMY_PRODUCTS } from '@/data/products';
 import ProductSection from './_components/product-session';
 import { CarouselItem } from '@/components/ui/carousel';
-import Breadcrumbs from '@/components/common-breadcrumbs';
 
 const ProductsPage = () => {
   const products = DUMMY_PRODUCTS.slice(0,5);
 
   return (
-    <>
-    <div className="mx-auto container">
-    {/* Breadcrumb */}
-    <Breadcrumbs />
-    </div>
+    <div className='container mx-auto w-full px-4 py-2'>
     <ProductSection
       title="Our Saree Collection"
       link="/products/dresses"
@@ -49,7 +44,7 @@ const ProductsPage = () => {
         </CarouselItem>
       ))}
     </ProductSection>
-    </>
+    </div>
   );
 };
 

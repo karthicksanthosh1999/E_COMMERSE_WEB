@@ -167,9 +167,6 @@ const averageRating =
 
       <section className="mx-auto container px-4 py-8 sm:px-6 lg:px-8 lg:py-14">
 
-        {/* Breadcrumb */}
-        <Breadcrumbs />
-
         <div className="grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:gap-14">
 
           {/* =================================================

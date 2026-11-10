@@ -56,7 +56,7 @@ const InvoiceModal = ({ modelOpen = false, selectedInvoice, closeInvoice }: Invo
                       </DialogTitle>
                     </DialogHeader>
                     <p className="text-[10px] tracking-[0.2em] text-brand-brown uppercase">
-                      CK Royal Textiles
+                      CK Royal Enterprises
                     </p>
                     <p className="text-[10px] text-brand-burgundy-dark/70">
                       Tax Invoice & Silk Certificate

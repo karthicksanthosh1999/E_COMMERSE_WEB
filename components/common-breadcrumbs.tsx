@@ -34,8 +34,11 @@ const Breadcrumbs = ({ labels = {} }: BreadcrumbsProps) => {
       .replace(/\b\w/g, (char) => char.toUpperCase());
   };
 
+  if(pathname === "/"){
+    return null
+  }
   return (
-    <div className="mb-2 flex items-center gap-2 text-sm text-muted-foreground">
+    <div className="mx-auto container px-10 bg-amber-100 py-2 mb-2 flex items-center gap-2 text-sm text-muted-foreground">
     <Breadcrumb>
       <BreadcrumbList>
         <BreadcrumbItem>

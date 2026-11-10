@@ -136,7 +136,7 @@ export default function Footer() {
                   </h3>
 
                   <p className="text-[8px] font-bold tracking-[0.22em] text-[#d9a91a]">
-                    CK ROYAL TEXTILES
+                    CK ROYAL ENTERPRISES
                   </p>
                 </div>
               </Link>
@@ -273,7 +273,7 @@ export default function Footer() {
 
             {/* Copyright */}
             <p className="text-[10px] leading-5 text-[#a97646] lg:text-right">
-              © 2026 Sri Gowri - CK Royal Textiles • Fashion. All rights
+              © 2026 Sri Gowri - CK Royal Enterprises • Fashion. All rights
               reserved. Cultivating royal elegance, honoring handloom
               traditions.
             </p>

@@ -36,10 +36,10 @@ export default function Loading() {
             key={i}
             className="absolute bg-[#FFD700] rounded-full"
             style={{
-              width: Math.random() * 3 + 1 + 'px',
-              height: Math.random() * 3 + 1 + 'px',
-              top: Math.random() * 100 + '%',
-              left: Math.random() * 100 + '%',
+              width: Number(Math.random()) * 3 + 1 + 'px',
+              height: Number(Math.random()) * 3 + 1 + 'px',
+              top: Number(Math.random()) * 100 + '%',
+              left: Number(Math.random()) * 100 + '%',
             }}
             animate={{
               opacity: [0.2, 1, 0.2],

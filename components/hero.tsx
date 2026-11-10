@@ -69,7 +69,7 @@ export default function HeroSection() {
               size="lg"
               className="h-14 rounded-full bg-brand-gold px-8 text-base font-bold text-brand-burgundy shadow-lg shadow-black/10 hover:bg-brand-gold-dark"
             >
-              <Link href="/dresses" className="flex items-center">
+              <Link href="/products/dresses" className="flex items-center">
                 Explore Collection
                 <ArrowDown className="ml-2 size-5" />
               </Link>

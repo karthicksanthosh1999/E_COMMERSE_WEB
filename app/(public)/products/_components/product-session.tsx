@@ -62,13 +62,6 @@ const ProductSection = ({
         <CarouselContent className="-ml-2">
           {children}
         </CarouselContent>
-        {productCount > 3 && (
-          <>
-            <CarouselPrevious className="hidden md:flex" />
-            <CarouselNext className="hidden md:flex" />
-          </>
-        )}
-
       </Carousel>
     </section>
   );
