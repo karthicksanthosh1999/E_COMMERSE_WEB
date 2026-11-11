@@ -1,12 +1,12 @@
 import HeroSection from '@/components/hero';
 import WeaverHeritage from '@/components/CTA';
-import DressesPage from './products/dresses/page';
+import ProductsPage from './products/page';
 
 const Home = () => {
   return (
     <>
       <HeroSection />
-      <DressesPage />
+      <ProductsPage />
       <WeaverHeritage />
     </>
   )

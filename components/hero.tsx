@@ -30,8 +30,6 @@ const features = [
 ];
 
 export default function HeroSection() {
-  const whatsappNumber = "919876543210";
-
   return (
     <section className="relative isolate overflow-hidden bg-brand-burgundy text-brand-cream">
       {/* Background decoration */}
@@ -82,7 +80,7 @@ export default function HeroSection() {
               disabled
               title="Coming Soon"
             >
-              <Link href={`https://wa.me/${whatsappNumber}`} className="flex items-center">
+              <Link href={`https://wa.me/${process.env.NEXT_PUBLIC_CLIENT_MOBILE_NO}`} className="flex items-center">
                 <Sparkles className="mr-2 size-5 text-brand-gold" />
                 Ask AI
               </Link>
@@ -160,17 +158,6 @@ export default function HeroSection() {
           </div>
         </div>
       </div>
-
-      {/* Floating WhatsApp button */}
-      <Link
-        href={`https://wa.me/${whatsappNumber}`}
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="Chat with us on WhatsApp"
-        className="fixed bottom-6 right-6 z-50 flex size-14 items-center justify-center rounded-full bg-[#00c96b] text-white shadow-xl transition-transform hover:scale-110"
-      >
-        <MessageCircle className="size-7" />
-      </Link>
     </section>
   );
 }

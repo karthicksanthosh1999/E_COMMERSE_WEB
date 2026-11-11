@@ -3,14 +3,10 @@
 import { useState } from "react";
 import Link from "next/link";
 import {
-  Heart,
-  ShoppingBag,
-  Plus,
   Menu,
   X,
   Sparkles,
   MessageCircle,
-  Phone,
   Circle,
   Package,
   User,
@@ -69,10 +65,15 @@ export default function Header() {
 
         {/* Right */}
         <div className="flex items-center gap-5 whitespace-nowrap">
-          <div className="flex items-center gap-1">
+          <Link 
+            href={`https://wa.me/${process.env.NEXT_PUBLIC_CLIENT_MOBILE_NO}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Chat with us on WhatsApp"
+            className="flex items-center gap-1">
             <MessageCircle size={14} />
             WhatsApp: +91 {process.env.NEXT_PUBLIC_CLIENT_MOBILE_NO}
-          </div>
+          </Link>
         </div>
       </div>
 
@@ -100,9 +101,7 @@ export default function Header() {
               </h1>
 
               <p className="mt-0.5 text-[10px] font-bold tracking-[0.32em] text-[#e5b928]">
-                CK ROYAL TEXTILES
-                <span className="mx-2">•</span>
-                FASHION
+                CK ROYAL ENTERPRISE
               </p>
             </div>
           </Link>

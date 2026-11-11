@@ -184,3 +184,23 @@
     @apply font-poppins;
   }
 }
+
+/* width */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #d9ac48;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #fac021;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}

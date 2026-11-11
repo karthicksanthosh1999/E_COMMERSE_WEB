@@ -38,7 +38,7 @@ const Breadcrumbs = ({ labels = {} }: BreadcrumbsProps) => {
     return null
   }
   return (
-    <div className="mx-auto container px-10 bg-amber-100 py-2 mb-2 flex items-center gap-2 text-sm text-muted-foreground">
+    <div className="px-10 bg-amber-100 py-2 mb-2 flex items-center gap-2 text-sm text-muted-foreground">
     <Breadcrumb>
       <BreadcrumbList>
         <BreadcrumbItem>
